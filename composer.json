@@ -1,0 +1,30 @@
+{
+	"name": "motokraft/paket-rusbid-sdk",
+	"description": "Paket RusBud.DE PHP API SDK",
+	"keywords": [ "rusbid", "sdk", "php", "paket" ],
+	"homepage": "https://paket.rusbid.de",
+	"license": "MIT",
+	"type": "library",
+	"authors": [
+		{
+			"name": "Valera Karmanov",
+			"email": "valeravk230594@mail.ru"
+		}
+	],
+	"require": {
+		"php": ">=7.3",
+		"guzzlehttp/guzzle": "^7.3"
+	},
+	"autoload": {
+		"psr-4": {
+			"Motokraft\\PaketRusBid\\": "src"
+		}
+	},
+	"config": {
+		"optimize-autoloader": true,
+		"vendor-dir": "vendor",
+		"sort-packages": true
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true
+}

@@ -1,0 +1,57 @@
+<?php namespace Motokraft\PaketRusBid\Request;
+
+/**
+ * @name        Paket RusBid Germany
+ * @package     motokraft/paket-rusbid-sdk
+ *
+ * @copyright   2021 motokraft. MIT License
+ */
+
+use \Motokraft\PaketRusBid\Object\BaseObject;
+use \Motokraft\PaketRusBid\Traits\MessageBag;
+use \GuzzleHttp\Exception\RequestException;
+
+class BaseRequest extends BaseObject
+{
+    use MessageBag;
+
+    protected $client;
+
+    function send(array $data = [])
+    {
+        $this->client = new \GuzzleHttp\Client([
+            'base_uri' => 'https://api-paket.rusbid.de'
+        ]);
+
+        $data['api_key'] = $this->get('api_key');
+        $data['token'] = $this->get('token');
+
+        $response = $this->client->post('', [
+            'form_params' => $data
+        ]);
+
+        if($response->getStatusCode() !== 200)
+        {
+            throw new \Exception('Error Request');
+        }
+
+        if(!$body = (string) $response->getBody())
+        {
+            throw new \Exception('Response empty!');
+        }
+
+        $response = new BaseObject(json_decode($body));
+
+        if(json_last_error() !== JSON_ERROR_NONE)
+        {
+            throw new \Exception(json_last_error_msg());
+        }
+
+        if($messages = $response->get('messages'))
+        {
+            $this->setMessages((array) $messages);
+        }
+
+        return $response;
+    }
+}
