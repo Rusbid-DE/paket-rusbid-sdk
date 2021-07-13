@@ -23,13 +23,18 @@ class Request
         $this->request->set('token', $token);
     }
 
-    function requestItems(array $params = [])
+    function getErrors()
+    {
+        return $this->request->getErrorMessages();
+    }
+
+    protected function requestItems(array $params = [])
     {
         $result = $this->request->send($params);
 
         $items = array_map(function ($data) {
             return $this->prepareItem($data);
-        }, $result->get('data'));
+        }, $result->get('data', []));
 
         $result->set('data', $items);
 
@@ -37,7 +42,7 @@ class Request
         return new ItemsObject($data);
     }
 
-    function requestItem(array $params)
+    protected function requestItem(array $params)
     {
         $result = $this->request->send($params);
 
@@ -47,11 +52,6 @@ class Request
         }
 
         return $this->prepareItem($data);
-    }
-
-    function getErrors()
-    {
-        return $this->request->getErrorMessages();
     }
 
     protected function prepareItem(\stdClass $data)
