@@ -47,12 +47,14 @@ class BaseRequest extends BaseObject
             throw new \Exception('Response empty!');
         }
 
-        $response = new BaseObject(json_decode($body));
+        $data = (array) json_decode($body);
 
         if(json_last_error() !== JSON_ERROR_NONE)
         {
             throw new \Exception(json_last_error_msg());
         }
+
+        $response = new BaseObject($data);
 
         if($messages = $response->get('messages'))
         {
