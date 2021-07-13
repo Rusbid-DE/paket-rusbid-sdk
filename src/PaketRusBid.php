@@ -62,6 +62,11 @@ class PaketRusBid
         return $this->getClass('Price');
     }
 
+    function getPodStatus()
+    {
+        return $this->getClass('PodStatus');
+    }
+
     protected function getClass(string $name)
     {
         $class = Requests::class . '\\' . ucfirst($name);
