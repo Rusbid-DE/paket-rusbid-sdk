@@ -23,8 +23,15 @@ class BaseRequest extends BaseObject
             'base_uri' => 'https://api-paket.rusbid.de'
         ]);
 
-        $data['api_key'] = $this->get('api_key');
-        $data['token'] = $this->get('token');
+        if($api_key = $this->get('api_key'))
+        {
+            $data['api_key'] = $api_key;
+        }
+
+        if($token = $this->get('token'))
+        {
+            $data['token'] = $token;
+        }
 
         $response = $this->client->post('', [
             'form_params' => $data
