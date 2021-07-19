@@ -34,6 +34,11 @@ class ProductObject extends BaseObject
         return $this->get('sku');
     }
 
+    function getComing()
+    {
+        return (int) $this->get('coming');
+    }
+
     function getRemained()
     {
         return (int) $this->get('remained');
