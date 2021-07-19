@@ -39,6 +39,11 @@ class ProductObject extends BaseObject
         return (int) $this->get('coming');
     }
 
+    function getConsumption()
+    {
+        return (int) $this->get('consumption');
+    }
+
     function getRemained()
     {
         return (int) $this->get('remained');
